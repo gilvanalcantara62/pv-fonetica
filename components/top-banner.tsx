@@ -9,6 +9,7 @@ export function TopBanner() {
         width={1200}
         height={120}
         className="w-full h-auto"
+        sizes="(max-width: 768px) 100vw, 1200px"
         priority
       />
     </div>

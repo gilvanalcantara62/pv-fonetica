@@ -11,14 +11,24 @@ declare global {
 export function FacebookPixelEvents() {
   useEffect(() => {
     // ViewContent event on load
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "ViewContent", {
-        content_name: "Kit Grafismo Fonetico",
-        content_category: "Educacao Infantil",
-        value: 47.9,
-        currency: "BRL",
-      })
+    let timeoutId: NodeJS.Timeout;
+
+    const trackViewContent = () => {
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("track", "ViewContent", {
+          content_name: "Kit Grafismo Fonetico",
+          content_category: "Educacao Infantil",
+          value: 47.9,
+          currency: "BRL",
+        })
+      } else {
+        timeoutId = setTimeout(trackViewContent, 500)
+      }
     }
+
+    trackViewContent();
+
+    return () => clearTimeout(timeoutId);
   }, [])
 
   return null
